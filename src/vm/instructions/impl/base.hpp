@@ -4,6 +4,9 @@
 
 namespace instructions {
 
+    // Putting this here to make the code more neat inside the instruction definitions
+    byte buffer;
+
     /// No operation
     instr noop (instruction_t_params) {}
 
@@ -17,6 +20,42 @@ namespace instructions {
         owner->panic(3);
     }
 
+
+
+    /// Increment the specified register
+    instr increment_register (instruction_t_params) {
+        owner->get_register(data[0], &buffer);
+        owner->set_register(data[0], buffer + 1);
+    }
+
+    /// Decrement the specified register
+    instr decrement_register (instruction_t_params) {
+        owner->get_register(data[0], &buffer);
+        owner->set_register(data[0], buffer - 1);
+    }
+
+    /// Store a constant into the specified register
+    instr store_into_register (instruction_t_params) {
+        ushort constant = bin::bytes_to_short(&data[1], 0);
+        owner->set_register(data[0], constant);
+    }
+
+    /// Store the data from a place in memory in the specified register
+    instr memory_to_register (instruction_t_params) {
+        ushort memory_address = bin::bytes_to_short(&data[1], 0);
+        owner->get_memory()->read(memory_address, &buffer);
+        owner->set_register(data[0], buffer);
+    }
+
+    /// Store the specified register in memory
+    instr register_to_memory (instruction_t_params) {
+        ushort memory_address = bin::bytes_to_short(&data[1], 0);
+        owner->get_register(data[0], &buffer);
+        owner->get_memory()->write(memory_address, buffer);
+    }
+
+
+
     /// Unconditional jump
     instr jump (instruction_t_params) {
         ushort address = bin::bytes_to_short(&data[0], 0);
@@ -25,7 +64,7 @@ namespace instructions {
     }
 
     /// Jump if two registers' values equal
-    instr jump_if_registers_equal (instruction_t_params) {
+    instr jump_cond_registers_equal (instruction_t_params) {
         byte register_a = data[0];
         byte register_b = data[1];
         ushort address = bin::bytes_to_short(&data[2], 0);
@@ -42,7 +81,7 @@ namespace instructions {
     }
 
     /// Jump if the first register is greater than the second
-    instr jump_if_register_greater_than (instruction_t_params) {
+    instr jump_cond_registers_greater (instruction_t_params) {
         byte register_a = data[0];
         byte register_b = data[1];
         ushort address = bin::bytes_to_short(&data[2], 0);
@@ -58,8 +97,8 @@ namespace instructions {
         }
     }
 
-    /// Jump if the first register is greater than the second
-    instr jump_if_register_less_than (instruction_t_params) {
+    /// Jump if the first register is less than the second
+    instr jump_cond_registers_less (instruction_t_params) {
         byte register_a = data[0];
         byte register_b = data[1];
         ushort address = bin::bytes_to_short(&data[2], 0);

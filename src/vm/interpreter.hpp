@@ -52,6 +52,10 @@ class instruction_interpreter {
             prefix = _prefix;
         }
 
+        inline x8memory<MEMORY_SIZE>* get_memory () {
+            return memory;
+        }
+
         void jump(int address) {
             current_address = address;
         }
