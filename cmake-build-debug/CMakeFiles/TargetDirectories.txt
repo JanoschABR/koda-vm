@@ -1,0 +1,3 @@
+D:/Projects/CLion/koda-vm/cmake-build-debug/CMakeFiles/koda_vm.dir
+D:/Projects/CLion/koda-vm/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Projects/CLion/koda-vm/cmake-build-debug/CMakeFiles/rebuild_cache.dir
