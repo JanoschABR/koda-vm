@@ -36,10 +36,6 @@ int main() {
     x8memory<MEMORY_SIZE> memory = x8memory<MEMORY_SIZE>();
     instruction_interpreter interpreter = instruction_interpreter(&memory, &map);
 
-    interpreter.set_register(0, 6);
-    interpreter.set_register(1, 6);
-    interpreter.set_register(2, 8);
-
     streampos size;
     ifstream file (R"(D:\Projects\CLion\koda-vm\bytecode.bin)", ios::in | ios::binary | ios::ate);
 
