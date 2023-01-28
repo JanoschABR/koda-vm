@@ -4,9 +4,6 @@
 
 namespace instructions {
 
-    // Putting this here to make the code more neat inside the instruction definitions
-    byte buffer;
-
     /// No operation
     instr noop (instruction_t_params) {}
 
@@ -24,12 +21,14 @@ namespace instructions {
 
     /// Increment the specified register
     instr increment_register (instruction_t_params) {
+        byte buffer;
         owner->get_register(data[0], &buffer);
         owner->set_register(data[0], buffer + 1);
     }
 
     /// Decrement the specified register
     instr decrement_register (instruction_t_params) {
+        byte buffer;
         owner->get_register(data[0], &buffer);
         owner->set_register(data[0], buffer - 1);
     }
@@ -42,6 +41,7 @@ namespace instructions {
 
     /// Store the data from a place in memory in the specified register
     instr memory_to_register (instruction_t_params) {
+        byte buffer;
         ushort memory_address = bin::bytes_to_short(&data[1], 0);
         owner->get_memory()->read(memory_address, &buffer);
         owner->set_register(data[0], buffer);
@@ -49,6 +49,7 @@ namespace instructions {
 
     /// Store the specified register in memory
     instr register_to_memory (instruction_t_params) {
+        byte buffer;
         ushort memory_address = bin::bytes_to_short(&data[1], 0);
         owner->get_register(data[0], &buffer);
         owner->get_memory()->write(memory_address, buffer);
@@ -109,6 +110,63 @@ namespace instructions {
         owner->get_register(register_b, &register_b_value);
 
         if (register_a_value < register_b_value) {
+            owner->set_flag(FLAG_JUMP);
+            owner->jump(address);
+        }
+    }
+
+    /// Jump if two 16-bit numbers stored in the specified registers are equal
+    instr jump_cond_registers_equal_x16 (instruction_t_params) {
+        ushort address = bin::bytes_to_short(&data[2], 0);
+
+        array<byte, 4> buffer = array<byte, 4>();
+        owner->get_register(data[0] + 0, &buffer[0]); // 1st byte of 1st number
+        owner->get_register(data[0] + 1, &buffer[1]); // 2nd byte of 1st number
+        owner->get_register(data[1] + 0, &buffer[2]); // 1st byte of 2nd number
+        owner->get_register(data[1] + 1, &buffer[3]); // 2nd byte of 2nd number
+
+        ushort a = bin::bytes_to_short(&buffer[0]);
+        ushort b = bin::bytes_to_short(&buffer[2]);
+
+        if (a == b) {
+            owner->set_flag(FLAG_JUMP);
+            owner->jump(address);
+        }
+    }
+
+    /// Jump if the first register is greater than the second
+    instr jump_cond_registers_greater_x16 (instruction_t_params) {
+        ushort address = bin::bytes_to_short(&data[2], 0);
+
+        array<byte, 4> buffer = array<byte, 4>();
+        owner->get_register(data[0] + 0, &buffer[0]); // 1st byte of 1st number
+        owner->get_register(data[0] + 1, &buffer[1]); // 2nd byte of 1st number
+        owner->get_register(data[1] + 0, &buffer[2]); // 1st byte of 2nd number
+        owner->get_register(data[1] + 1, &buffer[3]); // 2nd byte of 2nd number
+
+        ushort a = bin::bytes_to_short(&buffer[0]);
+        ushort b = bin::bytes_to_short(&buffer[2]);
+
+        if (a > b) {
+            owner->set_flag(FLAG_JUMP);
+            owner->jump(address);
+        }
+    }
+
+    /// Jump if the first register is less than the second
+    instr jump_cond_registers_less_x16 (instruction_t_params) {
+        ushort address = bin::bytes_to_short(&data[2], 0);
+
+        array<byte, 4> buffer = array<byte, 4>();
+        owner->get_register(data[0] + 0, &buffer[0]); // 1st byte of 1st number
+        owner->get_register(data[0] + 1, &buffer[1]); // 2nd byte of 1st number
+        owner->get_register(data[1] + 0, &buffer[2]); // 1st byte of 2nd number
+        owner->get_register(data[1] + 1, &buffer[3]); // 2nd byte of 2nd number
+
+        ushort a = bin::bytes_to_short(&buffer[0]);
+        ushort b = bin::bytes_to_short(&buffer[2]);
+
+        if (a < b) {
             owner->set_flag(FLAG_JUMP);
             owner->jump(address);
         }

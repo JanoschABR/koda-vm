@@ -29,6 +29,9 @@ int main() {
     map.add_instruction(0x0201, instructions::jump_cond_registers_equal);
     map.add_instruction(0x0202, instructions::jump_cond_registers_greater);
     map.add_instruction(0x0203, instructions::jump_cond_registers_less);
+    map.add_instruction(0x0204, instructions::jump_cond_registers_equal_x16);
+    map.add_instruction(0x0205, instructions::jump_cond_registers_greater_x16);
+    map.add_instruction(0x0206, instructions::jump_cond_registers_less_x16);
 
     x8memory<MEMORY_SIZE> memory = x8memory<MEMORY_SIZE>();
     instruction_interpreter interpreter = instruction_interpreter(&memory, &map);

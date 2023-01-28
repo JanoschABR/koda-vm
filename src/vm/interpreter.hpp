@@ -14,9 +14,17 @@ class instruction_interpreter;
 #define instruction_t_params array<byte, INSTR_DATA_SIZE> data, instruction_interpreter* owner
 typedef void (*instruction_t)(instruction_t_params);
 
+
+/// If set the interpreter/machine will stop executing
 #define FLAG_HALT   (1 << 0)
+
+/// Indicates that the shutdown was due to an error of some sort
 #define FLAG_PANIC  (1 << 1)
+
+/// If set the current address will not be incremented next clock cycle.
+/// It should be used when modifying the current address and is automatically set when using the jump instructions.
 #define FLAG_JUMP   (1 << 2)
+
 
 class instruction_interpreter {
     protected:
