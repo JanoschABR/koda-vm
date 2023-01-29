@@ -2,6 +2,7 @@
 
 #include <stack>
 #include <iostream>
+#include <bitset>
 #include "instructions/shared.hpp"
 #include "instructions/map/instruction_map.hpp"
 #include "memory/registers.hpp"
@@ -34,7 +35,7 @@ class instruction_interpreter {
         x8registers<16> regs;
         x8memory<MEMORY_SIZE>* memory;
 
-        int flags = 0b0000000000000000;
+        byte flags = 0b00000000;
         x8register state = x8register();
 
         stack<int> address_stack = stack<int>();
@@ -128,9 +129,10 @@ class instruction_interpreter {
 
             // Check if we halted
             if (get_flag(FLAG_HALT)) {
+                std::bitset<8> flags_bitset(flags);
                 std::cout << prefix <<  "halt     "
                           << " address=0x" << full_length(int) << std::hex << current_address
-                          << " flags=0x" << full_length(int) << std::hex << flags
+                          << " flags=" << flags_bitset
                           << " state=0x" << full_length(char) << std::hex << (int)state.get()
                           << "\n" << std::endl;
                 return;
@@ -138,9 +140,11 @@ class instruction_interpreter {
 
             // Only report done if we haven't panicked
             if (!get_flag(FLAG_PANIC)) {
+
+                std::bitset<8> flags_bitset(flags);
                 std::cout << prefix <<  "ok       "
                           << " address=0x" << full_length(int) << std::hex << current_address
-                          << " flags=0x" << full_length(int) << std::hex << flags
+                          << " flags=" << flags_bitset
                           << " instruction=0x" << full_length(short) << std::hex << code
                           << " state=0x" << full_length(char) << std::hex << (int)state.get()
                           << "\n" << std::endl;
@@ -177,9 +181,10 @@ class instruction_interpreter {
             set_flag(FLAG_PANIC, true);
             set_flag(FLAG_HALT, true);
 
+            std::bitset<8> flags_bitset(flags);
             std::cout << prefix << "panic    "
                 << " location=0x" << full_length(int) << std::hex << location
-                << " flags=0x" << full_length(int) << std::hex << flags
+                << " flags=" << flags_bitset
                 << " address=0x" << full_length(int) << std::hex << current_address
                 << " stack=0x" << full_length(int) << std::hex << address_stack.size()
                 << " state=0x" << full_length(char) << std::hex << state.get()
