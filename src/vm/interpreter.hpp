@@ -114,13 +114,17 @@ class instruction_interpreter {
                 } else panic(2);
             } else panic(1);
 
+            std::cout << prefix << "regs      0x"; // Print the data
+            bin::print_hex((byte*)regs.get_data_pointer(), regs.get_data_size());
+            std::cout << std::endl;
+
             // Check if we halted
             if (get_flag(FLAG_HALT)) {
                 std::cout << prefix <<  "halt     "
                           << " address=0x" << full_length(int) << std::hex << current_address
                           << " flags=0x" << full_length(int) << std::hex << flags
                           << " state=0x" << full_length(char) << std::hex << (int)state.get()
-                          << std::endl;
+                          << "\n" << std::endl;
                 return;
             }
 
@@ -131,7 +135,7 @@ class instruction_interpreter {
                           << " flags=0x" << full_length(int) << std::hex << flags
                           << " instruction=0x" << full_length(short) << std::hex << code
                           << " state=0x" << full_length(char) << std::hex << (int)state.get()
-                          << std::endl;
+                          << "\n" << std::endl;
             }
         }
 

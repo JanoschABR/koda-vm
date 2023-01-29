@@ -46,6 +46,11 @@ class register_base {
         constexpr int size () {
             return sizeof(content_type);
         }
+
+        /// Get a pointer to the content within this register
+        content_type* get_pointer () {
+            return &content;
+        }
 };
 
 /// An 8-bit register (1 byte)
@@ -71,6 +76,14 @@ class registers {
             for (int i = 0; i < n; i++) {
                 regs[i] = register_base<v_type>();
             }
+        }
+
+        int get_data_size () {
+            return n * sizeof(r_type);
+        }
+
+        byte* get_data_pointer () {
+            return regs[0].get_pointer();
         }
 
         /// Returns true if the given address is valid
