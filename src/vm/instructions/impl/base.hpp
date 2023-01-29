@@ -35,8 +35,7 @@ namespace instructions {
 
     /// Store a constant into the specified register
     instr store_into_register (instruction_t_params) {
-        ushort constant = bin::bytes_to_short(&data[1], 0);
-        owner->set_register(data[0], constant);
+        owner->set_register(data[0], data[1]);
     }
 
     /// Store the data from a place in memory in the specified register
