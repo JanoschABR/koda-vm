@@ -54,6 +54,19 @@ namespace instructions {
         owner->get_memory()->write(memory_address, buffer);
     }
 
+    /// Write the specified register to the state register
+    instr write_state_register (instruction_t_params) {
+        byte buffer;
+        owner->get_register(data[0], &buffer);
+        owner->get_state_register()->set(buffer);
+    }
+
+    /// Read the state register into the specified register
+    instr read_state_register (instruction_t_params) {
+        byte buffer;
+        owner->get_register(data[0], &buffer);
+        owner->get_state_register()->set(buffer);
+    }
 
 
     /// Unconditional jump

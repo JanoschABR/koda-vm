@@ -35,6 +35,8 @@ class instruction_interpreter {
         x8memory<MEMORY_SIZE>* memory;
 
         int flags = 0b0000000000000000;
+        x8register state = x8register();
+
         stack<int> address_stack = stack<int>();
         int current_address = 0;
 
@@ -62,6 +64,10 @@ class instruction_interpreter {
 
         inline x8memory<MEMORY_SIZE>* get_memory () {
             return memory;
+        }
+
+        inline x8register* get_state_register () {
+            return &state;
         }
 
         void jump(int address) {
@@ -113,6 +119,7 @@ class instruction_interpreter {
                 std::cout << prefix <<  "halt     "
                           << " address=0x" << full_length(int) << std::hex << current_address
                           << " flags=0x" << full_length(int) << std::hex << flags
+                          << " state=0x" << full_length(char) << std::hex << (int)state.get()
                           << std::endl;
                 return;
             }
@@ -123,6 +130,7 @@ class instruction_interpreter {
                           << " address=0x" << full_length(int) << std::hex << current_address
                           << " flags=0x" << full_length(int) << std::hex << flags
                           << " instruction=0x" << full_length(short) << std::hex << code
+                          << " state=0x" << full_length(char) << std::hex << (int)state.get()
                           << std::endl;
             }
         }
@@ -156,6 +164,7 @@ class instruction_interpreter {
                 << " flags=0x" << full_length(int) << std::hex << flags
                 << " address=0x" << full_length(int) << std::hex << current_address
                 << " stack=0x" << full_length(int) << std::hex << address_stack.size()
+                << " state=0x" << full_length(char) << std::hex << state.get()
                 << std::endl;
 
         }

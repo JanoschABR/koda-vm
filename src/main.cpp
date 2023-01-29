@@ -25,6 +25,9 @@ int main() {
     map.add_instruction(0x0103, instructions::memory_to_register);
     map.add_instruction(0x0104, instructions::register_to_memory);
 
+    map.add_instruction(0x0110, instructions::write_state_register);
+    map.add_instruction(0x0111, instructions::read_state_register);
+
     map.add_instruction(0x0200, instructions::jump);
     map.add_instruction(0x0201, instructions::jump_cond_registers_equal);
     map.add_instruction(0x0202, instructions::jump_cond_registers_greater);
