@@ -78,10 +78,12 @@ class registers {
             }
         }
 
+        /// Get the size of the data located at the data pointer
         int get_data_size () {
             return n * sizeof(r_type);
         }
 
+        /// Get a pointer to the data
         byte* get_data_pointer () {
             return regs[0].get_pointer();
         }
