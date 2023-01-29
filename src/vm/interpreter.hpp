@@ -31,7 +31,7 @@ class instruction_interpreter {
         string prefix = "";
 
         instruction_map* map = nullptr;
-        x8registers<256> regs;
+        x8registers<16> regs;
         x8memory<MEMORY_SIZE>* memory;
 
         int flags = 0b0000000000000000;
@@ -42,7 +42,7 @@ class instruction_interpreter {
 
     public:
         instruction_interpreter () {
-            this->regs = x8registers<256>();
+            this->regs = x8registers<16>();
             this->memory = nullptr;
         }
 
