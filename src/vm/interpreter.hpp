@@ -28,7 +28,7 @@ typedef void (*instruction_t)(instruction_t_params);
 
 class instruction_interpreter {
     protected:
-        string prefix = "";
+        string prefix;
 
         instruction_map* map = nullptr;
         x8registers<16> regs;
