@@ -1,3 +1,3 @@
 #pragma once
 
-#define MEMORY_SIZE 4096
+#define MEMORY_SIZE 1024
