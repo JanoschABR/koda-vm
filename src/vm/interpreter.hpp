@@ -36,7 +36,8 @@ class instruction_interpreter {
         x8memory<MEMORY_SIZE>* memory;
 
         byte flags = 0b00000000;
-        x8register state = x8register();
+        x8register state_register = x8register();
+        x8register compare_register = x8register();
 
         stack<int> address_stack = stack<int>();
         int current_address = 0;
@@ -70,9 +71,14 @@ class instruction_interpreter {
             return memory;
         }
 
-        /// Get a pointer to the state register
+        /// Get a pointer to the state_register register
         inline x8register* get_state_register () {
-            return &state;
+            return &state_register;
+        }
+
+        /// Get a pointer to the state_register register
+        inline x8register* get_compare_register () {
+            return &compare_register;
         }
 
         /// Jump to a certain address. This does not automatically set the JUMP flag.
@@ -133,7 +139,7 @@ class instruction_interpreter {
                 std::cout << prefix <<  "halt     "
                           << " address=0x" << full_length(int) << std::hex << current_address
                           << " flags=" << flags_bitset
-                          << " state=0x" << full_length(char) << std::hex << (int)state.get()
+                          << " state_register=0x" << full_length(char) << std::hex << (int)state_register.get()
                           << "\n" << std::endl;
                 return;
             }
@@ -146,7 +152,7 @@ class instruction_interpreter {
                           << " address=0x" << full_length(int) << std::hex << current_address
                           << " flags=" << flags_bitset
                           << " instruction=0x" << full_length(short) << std::hex << code
-                          << " state=0x" << full_length(char) << std::hex << (int)state.get()
+                          << " state_register=0x" << full_length(char) << std::hex << (int)state_register.get()
                           << "\n" << std::endl;
             }
         }
@@ -161,7 +167,7 @@ class instruction_interpreter {
             this->flags = ((this->flags & ~flag) | ((value ? 0xFFFF : 0x0000) & flag));
         }
 
-        /// Get the state of a flag
+        /// Get the state_register of a flag
         bool get_flag(int flag) {
             return (this->flags & flag);
         }
@@ -183,11 +189,11 @@ class instruction_interpreter {
 
             std::bitset<8> flags_bitset(flags);
             std::cout << prefix << "panic    "
-                << " location=0x" << full_length(int) << std::hex << location
-                << " flags=" << flags_bitset
-                << " address=0x" << full_length(int) << std::hex << current_address
-                << " stack=0x" << full_length(int) << std::hex << address_stack.size()
-                << " state=0x" << full_length(char) << std::hex << state.get()
+                      << " location=0x" << full_length(int) << std::hex << location
+                      << " flags=" << flags_bitset
+                      << " address=0x" << full_length(int) << std::hex << current_address
+                      << " stack=0x" << full_length(int) << std::hex << address_stack.size()
+                      << " state_register=0x" << full_length(char) << std::hex << state_register.get()
                 << std::endl;
 
         }
