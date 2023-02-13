@@ -2,7 +2,7 @@
 #include "../shared_internal.hpp"
 #include "../../utils.hpp"
 
-namespace instructions {
+namespace instructions::base {
 
     /// No operation
     instr noop (instruction_t_params) {}

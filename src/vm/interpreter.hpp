@@ -26,10 +26,19 @@ typedef void (*instruction_t)(instruction_t_params);
 /// It should be used when modifying the current address and is automatically set when using the jump instructions.
 #define FLAG_JUMP   (1 << 2)
 
+/// Indicates that the last performed ALU operation resulted in a value that is 16-bit or greater
+#define FLAG_ALU_16 (1 << 3)
 
+/// The value that is put into the compare register if the values equal each other
 #define COMPARE_EQUAL 0
+
+/// The value that is put into the compare register if the first value is greater than the other
 #define COMPARE_MORE 1
+
+/// The value that is put into the compare register if the first value is less than the other
 #define COMPARE_LESS 2
+
+
 
 class instruction_interpreter {
     protected:
@@ -60,7 +69,7 @@ class instruction_interpreter {
             this->set_instruction_map(map);
         }
 
-        /// Set the instruction_map used for interpreting the instructions
+        /// Set the instruction_map used for interpreting the alu
         inline void set_instruction_map (instruction_map* _map) {
             this->map = _map;
         }

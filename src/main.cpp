@@ -2,6 +2,7 @@
 #include "vm/interpreter.hpp"
 #include "vm/instructions/impl/base.hpp"
 #include "vm/utils.hpp"
+#include "vm/instructions/impl/alu.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -15,31 +16,39 @@ int main() {
     std::cout << std::endl;
 
     instruction_map map = instruction_map();
+    using namespace instructions;
 
     // Control Instructions
-    map.add_instruction(0x0000, instructions::noop);
-    map.add_instruction(0x0001, instructions::halt);
-    map.add_instruction(0x0002, instructions::panic);
+    map.add_instruction(0x0000, base::noop);
+    map.add_instruction(0x0001, base::halt);
+    map.add_instruction(0x0002, base::panic);
 
     // Primitive Data Instructions
-    map.add_instruction(0x0100, instructions::increment_register);
-    map.add_instruction(0x0101, instructions::decrement_register);
-    map.add_instruction(0x0102, instructions::store_into_register);
-    map.add_instruction(0x0103, instructions::memory_to_register);
-    map.add_instruction(0x0104, instructions::register_to_memory);
+    map.add_instruction(0x0100, base::increment_register);
+    map.add_instruction(0x0101, base::decrement_register);
+    map.add_instruction(0x0102, base::store_into_register);
+    map.add_instruction(0x0103, base::memory_to_register);
+    map.add_instruction(0x0104, base::register_to_memory);
 
     // State Register Instructions
-    map.add_instruction(0x0110, instructions::write_state_register);
-    map.add_instruction(0x0111, instructions::read_state_register);
+    map.add_instruction(0x0110, base::write_state_register);
+    map.add_instruction(0x0111, base::read_state_register);
 
     // Jump Instructions
-    map.add_instruction(0x0200, instructions::jump);
-    map.add_instruction(0x0201, instructions::jump_compare);
+    map.add_instruction(0x0200, base::jump);
+    map.add_instruction(0x0201, base::jump_compare);
 
     // ALU Instructions
-    map.add_instruction(0x0300, instructions::compare);
-    map.add_instruction(0x0300, instructions::compare_x16);
-
+    map.add_instruction(0x0300, base::compare);
+    map.add_instruction(0x0301, base::compare_x16);
+    map.add_instruction(0x0310, alu::add);
+    map.add_instruction(0x0311, alu::sub);
+    map.add_instruction(0x0312, alu::binary_and);
+    map.add_instruction(0x0313, alu::binary_or);
+    map.add_instruction(0x0314, alu::binary_not);
+    map.add_instruction(0x0315, alu::binary_xor);
+    map.add_instruction(0x0316, alu::binary_shift_l);
+    map.add_instruction(0x0317, alu::binary_shift_r);
 
 
     x8memory<MEMORY_SIZE> memory = x8memory<MEMORY_SIZE>();
