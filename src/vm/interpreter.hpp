@@ -27,6 +27,10 @@ typedef void (*instruction_t)(instruction_t_params);
 #define FLAG_JUMP   (1 << 2)
 
 
+#define COMPARE_EQUAL 0
+#define COMPARE_MORE 1
+#define COMPARE_LESS 2
+
 class instruction_interpreter {
     protected:
         string prefix;
