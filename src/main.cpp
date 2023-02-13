@@ -3,6 +3,7 @@
 #include "vm/instructions/impl/base.hpp"
 #include "vm/utils.hpp"
 #include "vm/instructions/impl/alu.hpp"
+#include "vm/instructions/impl/ext.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -50,6 +51,9 @@ int main() {
     map.add_instruction(0x0316, alu::binary_shift_l);
     map.add_instruction(0x0317, alu::binary_shift_r);
 
+    // External Instructions
+    map.add_instruction(0x1000, ext::platform_info);
+    map.add_instruction(0x1001, ext::external_invoke);
 
     x8memory<MEMORY_SIZE> memory = x8memory<MEMORY_SIZE>();
     instruction_interpreter interpreter = instruction_interpreter(&memory, &map);

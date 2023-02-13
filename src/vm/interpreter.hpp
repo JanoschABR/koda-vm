@@ -79,6 +79,11 @@ class instruction_interpreter {
             prefix = _prefix;
         }
 
+        /// Get the prefix that this interpreter uses when writing to std::cout
+        inline string get_prefix () {
+            return prefix;
+        }
+
         /// Get a pointer to the memory used by this interpreter
         inline x8memory<MEMORY_SIZE>* get_memory () {
             return memory;

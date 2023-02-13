@@ -17,4 +17,5 @@ add_executable(koda_vm
         src/vm/instructions/shared_internal.hpp
         src/vm/utils.hpp
         src/vm/specs.hpp
-        src/vm/instructions/impl/alu.hpp)
+        src/vm/instructions/impl/alu.hpp
+        src/vm/instructions/impl/ext.hpp)
