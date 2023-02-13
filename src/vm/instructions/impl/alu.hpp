@@ -67,7 +67,7 @@ namespace instructions::alu {
         owner->get_register(data[0], &a);
 
         owner->set_flag(FLAG_ALU_16, false);
-        owner->set_register(data[2], ~a);
+        owner->set_register(data[1], ~a);
     }
 
     /// Shift Left an 8-bit number
