@@ -9,7 +9,7 @@ namespace instructions::alu {
         byte a = 0;
         owner->get_register(data[0], &a);
         byte b = 0;
-        owner->get_register(data[1], &a);
+        owner->get_register(data[1], &b);
 
         ushort result = ((ushort)a + b);
         owner->set_flag(FLAG_ALU_16, (result > 255));
@@ -21,7 +21,7 @@ namespace instructions::alu {
         byte a = 0;
         owner->get_register(data[0], &a);
         byte b = 0;
-        owner->get_register(data[1], &a);
+        owner->get_register(data[1], &b);
 
         ushort result = ((ushort)a - b);
         owner->set_flag(FLAG_ALU_16, (result > 255));
@@ -33,7 +33,7 @@ namespace instructions::alu {
         byte a = 0;
         owner->get_register(data[0], &a);
         byte b = 0;
-        owner->get_register(data[1], &a);
+        owner->get_register(data[1], &b);
 
         owner->set_flag(FLAG_ALU_16, false);
         owner->set_register(data[2], (a & b));
@@ -44,7 +44,7 @@ namespace instructions::alu {
         byte a = 0;
         owner->get_register(data[0], &a);
         byte b = 0;
-        owner->get_register(data[1], &a);
+        owner->get_register(data[1], &b);
 
         owner->set_flag(FLAG_ALU_16, false);
         owner->set_register(data[2], (a | b));
@@ -55,7 +55,7 @@ namespace instructions::alu {
         byte a = 0;
         owner->get_register(data[0], &a);
         byte b = 0;
-        owner->get_register(data[1], &a);
+        owner->get_register(data[1], &b);
 
         owner->set_flag(FLAG_ALU_16, false);
         owner->set_register(data[2], (a ^ b));
@@ -75,7 +75,7 @@ namespace instructions::alu {
         byte val = 0;
         owner->get_register(data[0], &val);
         byte shift = 0;
-        owner->get_register(data[1], &val);
+        owner->get_register(data[1], &shift);
 
         ushort result = ((ushort)val << shift);
         owner->set_flag(FLAG_ALU_16, (result > 255));
@@ -87,7 +87,7 @@ namespace instructions::alu {
         byte val = 0;
         owner->get_register(data[0], &val);
         byte shift = 0;
-        owner->get_register(data[1], &val);
+        owner->get_register(data[1], &shift);
 
         ushort result = ((ushort)val >> shift);
         owner->set_flag(FLAG_ALU_16, (result > 255));
