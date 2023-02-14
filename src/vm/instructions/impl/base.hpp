@@ -86,6 +86,13 @@ namespace instructions::base {
         owner->set_register(data[0], owner->get_stack()->top());
     }
 
+    /// Copy a region of memory to another
+    instr copy_memory (instruction_t_params) {
+        ushort source = bin::bytes_to_short(&data[0], 0);
+        ushort target = bin::bytes_to_short(&data[2], 0);
+        ushort length = bin::bytes_to_short(&data[4], 0);
+        owner->get_memory()->copy(source, length, target);
+    }
 
     /// Unconditional jump
     instr jump (instruction_t_params) {

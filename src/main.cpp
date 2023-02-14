@@ -30,6 +30,7 @@ int main() {
     map.add_instruction(0x0102, base::store_into_register);
     map.add_instruction(0x0103, base::memory_to_register);
     map.add_instruction(0x0104, base::register_to_memory);
+    map.add_instruction(0x0105, base::copy_memory);
 
     // State Register Instructions
     map.add_instruction(0x0110, base::write_state_register);
