@@ -52,7 +52,6 @@ class instruction_interpreter {
         x8register state_register = x8register();
         x8register compare_register = x8register();
 
-        stack<int> address_stack = stack<int>();
         int current_address = 0;
 
     public:
@@ -102,18 +101,6 @@ class instruction_interpreter {
         /// Jump to a certain address. This does not automatically set the JUMP flag.
         void jump(int address) {
             current_address = address;
-        }
-
-        /// Pushes the current address onto the stack, then jumps to the new address.
-        void jump_onto_stack(int address) {
-            address_stack.push(current_address);
-            jump(address);
-        }
-
-        /// Jumps to the top most address on the stack, then pops it.
-        void jump_from_stack() {
-            jump(address_stack.top());
-            address_stack.pop();
         }
 
         /// Interpret an instruction
@@ -210,7 +197,6 @@ class instruction_interpreter {
                       << " location=0x" << full_length(int) << std::hex << location
                       << " flags=" << flags_bitset
                       << " address=0x" << full_length(int) << std::hex << current_address
-                      << " stack=0x" << full_length(int) << std::hex << address_stack.size()
                       << " state_register=0x" << full_length(char) << std::hex << state_register.get()
                 << std::endl;
 
