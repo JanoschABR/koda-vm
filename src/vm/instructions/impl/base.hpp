@@ -68,6 +68,24 @@ namespace instructions::base {
         owner->get_state_register()->set(buffer);
     }
 
+    /// Push the specified register onto the stack
+    instr push_to_stack (instruction_t_params) {
+        byte buffer;
+        owner->get_register(data[0], &buffer);
+        owner->get_stack()->push(buffer);
+    }
+
+    /// Pop whatever is on the stack into the specified register
+    instr pop_from_stack (instruction_t_params) {
+        owner->set_register(data[0], owner->get_stack()->top());
+        owner->get_stack()->pop();
+    }
+
+    /// Put whatever is on the stack into the specified register without popping it
+    instr peek_into_stack (instruction_t_params) {
+        owner->set_register(data[0], owner->get_stack()->top());
+    }
+
 
     /// Unconditional jump
     instr jump (instruction_t_params) {

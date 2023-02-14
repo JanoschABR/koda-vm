@@ -52,6 +52,7 @@ class instruction_interpreter {
         x8register state_register = x8register();
         x8register compare_register = x8register();
 
+        stack<byte> m_stack = stack<byte>();
         int current_address = 0;
 
     public:
@@ -81,6 +82,11 @@ class instruction_interpreter {
         /// Get the prefix that this interpreter uses when writing to std::cout
         inline string get_prefix () {
             return prefix;
+        }
+
+        /// Get a pointer to the stack
+        inline stack<byte>* get_stack () {
+            return &m_stack;
         }
 
         /// Get a pointer to the memory used by this interpreter
@@ -197,6 +203,7 @@ class instruction_interpreter {
                       << " location=0x" << full_length(int) << std::hex << location
                       << " flags=" << flags_bitset
                       << " address=0x" << full_length(int) << std::hex << current_address
+                      << " stack=0x" << full_length(int) << std::hex << m_stack.size()
                       << " state_register=0x" << full_length(char) << std::hex << state_register.get()
                 << std::endl;
 

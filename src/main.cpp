@@ -35,6 +35,11 @@ int main() {
     map.add_instruction(0x0110, base::write_state_register);
     map.add_instruction(0x0111, base::read_state_register);
 
+    // Stack Instructions
+    map.add_instruction(0x0120, base::push_to_stack);
+    map.add_instruction(0x0121, base::pop_from_stack);
+    map.add_instruction(0x0122, base::peek_into_stack);
+
     // Jump Instructions
     map.add_instruction(0x0200, base::jump);
     map.add_instruction(0x0201, base::jump_compare);
